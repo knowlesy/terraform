@@ -24,11 +24,5 @@ Use of [operators](https://developer.hashicorp.com/terraform/language/expression
     terraform apply -var-file values.tfvars -destroy
     terraform apply -var-file values.tfvars -auto-approve -destroy
 
-# ERROR
-Expected Error as part of var file which will require you to fix 
-
-
-![alt text](https://github.com/knowlesy/terraform/blob/main/Azure/Example%205%20Deploy%20VMs%20with%20VAR%20File/error.png?raw=true)
-
 ### Note 
 This these examples are using azure cli for demonstration purposes only whereas they should be using a Service Principle Name
