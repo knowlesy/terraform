@@ -21,7 +21,7 @@ Use of [operators](https://developer.hashicorp.com/terraform/language/expression
     terraform plan -var-file values.tfvars
     terraform apply -var-file values.tfvars
 
-#ERROR
+# ERROR
 Expected Error as part of var file which will require you to fix 
 
 
