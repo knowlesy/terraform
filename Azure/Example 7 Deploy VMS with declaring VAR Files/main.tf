@@ -1,41 +1,4 @@
-#Variable conditions 
-variable "webservertype" {
- type        = string
- description = "Compute Resources"
- default     = "Standard_B2ms"
- 
-}
 
-variable "tags" {
- type = object({
-   environment = string
-   locked  = string
- })
- }
-
- variable "location" {
-  type     = string
-  nullable = false
-}
-
- variable "name" {
-  type     = string
-  nullable = false
-}
-
-
- variable "webserverqty" {
- type        = string
- description = "QTY of VMs"
- default     = "2"
-
-
- 
- validation {
-   condition     = var.webserverqty < 3
-   error_message = "Please provide a number less than 3."
- }
-}
 
 terraform {
   required_version = ">= 0.14"
@@ -103,7 +66,7 @@ resource "azurerm_linux_virtual_machine" "LinuxVM" {
   location                        = azurerm_resource_group.LinuxVM.location
   resource_group_name             = azurerm_resource_group.LinuxVM.name
   network_interface_ids           = [element(azurerm_network_interface.LinuxVM.*.id,count.index)]
-  size                            = var.webservertype
+  size                            = var.webservertype.small
   computer_name                   = "mylinuxVM-${count.index}"
   admin_username                  = "azureuser"
   admin_password                  = "Password1234!"
