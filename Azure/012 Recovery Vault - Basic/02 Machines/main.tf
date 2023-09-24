@@ -8,7 +8,7 @@ resource "random_pet" "rg_name" {
 #creates RG
 resource "azurerm_resource_group" "rg" {
   location = var.resource_group_location
-  name     = random_pet.rg_name.id
+  name     = "rg-dominant-ox"
 }
 
 #creates a random string to append to keyvault name so it is unique
@@ -22,7 +22,7 @@ resource "random_string" "azurerm_key_vault_name" {
 
 #Creates Key vault and assigns access policy via conditional policies to the user running this
 resource "azurerm_key_vault" "vault" {
-  name                       = coalesce("vault-${random_string.azurerm_key_vault_name.result}")
+  name                       = coalesce("vault-1${random_string.azurerm_key_vault_name.result}")
   location                   = azurerm_resource_group.rg.location
   resource_group_name        = azurerm_resource_group.rg.name
   tenant_id                  = data.azurerm_client_config.current.tenant_id
@@ -161,22 +161,3 @@ resource "azurerm_linux_virtual_machine" "ubuntu_vm" {
 
 
 
-#Backup - hash out after deploying recovery vault 
-
-data "azurerm_recovery_services_vault" "vault" {
-  name                = "backup-recovery-vault"
-  resource_group_name = "rg-recovery_vault"
-}
-
-data "azurerm_backup_policy_vm" "policy" {
-  name                = "basic-recovery-vault-policy"
-  recovery_vault_name = "backup-recovery-vault"
-  resource_group_name = "rg-recovery_vault"
-}
-
-resource "azurerm_backup_protected_vm" "vm1" {
-  resource_group_name = data.azurerm_recovery_services_vault.vault.resource_group_name
-  recovery_vault_name = data.azurerm_recovery_services_vault.vault.name
-  source_vm_id        = azurerm_linux_virtual_machine.ubuntu_vm.id
-  backup_policy_id    = data.azurerm_backup_policy_vm.policy.id
-}
