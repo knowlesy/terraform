@@ -17,6 +17,20 @@ provider "hyperv" {
   use_ntlm = false
 }
 
+resource "hyperv_vhd" "default" {
+  count = 3
+  path = "D:/VMs/Ubn-K8s-N${count.index}.vhd"
+  #source               = ""
+  #source_vm            = ""
+  #source_disk          = 0
+  vhd_type = "Dynamic"
+  #parent_path          = ""
+  size = 10737418240 #10GB
+  #block_size           = 0
+  #logical_sector_size  = 0
+  #physical_sector_size = 0
+}
+
 
 resource "hyperv_machine_instance" "default" {
   count                                   = 3
@@ -66,7 +80,7 @@ resource "hyperv_machine_instance" "default" {
     path                = "d:/iso/ubuntu-22.04.2-live-server-amd64.iso"
   }
 
-  # Create a hard disk drive
+  # Links hard disk drive
   hard_disk_drives {
     controller_type     = "Ide"
     controller_number   = "0"
