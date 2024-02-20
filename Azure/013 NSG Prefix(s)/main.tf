@@ -165,3 +165,6 @@ resource "azurerm_linux_virtual_machine" "ubuntu_agent_vm" {
   disable_password_authentication = false
 }
 
+output "RG" {
+  value = resource.azurerm_resource_group.rg.name
+}
