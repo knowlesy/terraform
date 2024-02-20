@@ -1,3 +1,17 @@
+terraform {
+  required_providers {
+    azurerm = {
+      source  = "hashicorp/azurerm"
+      version = ">=2.97.0"
+    }
+  }
+}
+
+#required
+provider "azurerm" {
+  features {}
+}
+
 #brings in some data from your Az login session
  data "azurerm_client_config" "current" {}
 
@@ -7,7 +21,7 @@ resource "random_pet" "rg_name" {
 
 #creates RG
 resource "azurerm_resource_group" "rg" {
-  location = uksouth
+  location = "uksouth"
   name     = random_pet.rg_name.id
 }
 
@@ -98,6 +112,7 @@ resource "azurerm_network_security_group" "ubuntu_nsg" {
     destination_address_prefix = "*"
     #destination_address_prefixes = ""
   }
+
 }
 
 # Connect the security group to the subnet
