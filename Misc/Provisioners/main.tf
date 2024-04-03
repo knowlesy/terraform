@@ -21,7 +21,8 @@ resource "aws_instance" "myec2" {
 
   provisioner "remote-exec" {
     inline = [
-      "sudo apt-get update && sudo apt-get upgrade -y"
+      "sudo apt-get update -y" , 
+      "sudo apt-get upgrade -y"
     ]
   }
 }
@@ -39,6 +40,7 @@ resource "aws_instance" "myec2-2" {
 
   provisioner "local-exec" {
     command = "echo ${self.private_ip} >> private_ips.txt"
+    on_failure = continue
   }
 }
 
