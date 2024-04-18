@@ -54,6 +54,12 @@ resource "aws_security_group" "security_group_payment_app" {
     protocol    = "tcp"
     cidr_blocks = ["0.0.0.0/0"]
   }
+
+  tags = {
+    name = "payments_app"
+    team = "payments team"
+    env  = "prod"
+  }
 }
 
 resource "aws_vpc" "default" {
