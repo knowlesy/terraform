@@ -13,7 +13,7 @@ data "aws_iam_users" "users" {}
 data "aws_called_identity" "current" {}
 
 resource "aws_iam_user" "lb" {
-  name = "admin-user-${data.aws_called_identity.id}"
+  name = "admin-user-${data.aws_called_identity.current.account_id}"
   path = "/system/"
 }
 
